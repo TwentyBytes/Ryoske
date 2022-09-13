@@ -25,6 +25,7 @@ public class NearbyLookController implements LookController {
     }
 
     @Override
-    public void update() {}
+    public void update() {
+    }
 
 }

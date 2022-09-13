@@ -6,17 +6,18 @@ import ryoske.api.interact.InteractHandle;
 import ryoske.api.location.LocationController;
 import ryoske.api.player.RyoskeNPC;
 import ryoske.api.profile.RyoskeProfile;
-import ryoske.api.settings.RyoskeSettings;
 import ryoske.api.settings.Settings;
 import ryoske.api.visibility.Visibility;
 import ryoske.impl.location.DefaultLocationController;
 import ryoske.impl.visibility.VisibilityNearby;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class RyoskePlayer extends RyoskeNPC {
 
-    private final int id;
     private final UUID uuid;
     private final RyoskeProfile profile;
     private final List<InteractHandle> interacts = new ArrayList<>();
@@ -28,9 +29,7 @@ public class RyoskePlayer extends RyoskeNPC {
     private String name;
     private double viewDistance = 25.0D;
 
-    public RyoskePlayer(int id, UUID uuid, String name, Location location) {
-        super(id);
-        this.id = id;
+    public RyoskePlayer(UUID uuid, String name, Location location) {
         this.uuid = uuid;
         this.name = name;
         this.profile = new RyoskeProfile(this);

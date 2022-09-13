@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.MainHand;
@@ -27,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VisibilityUtil {
+
+    static Field field;
 
     public static void show(RyoskeNPC npc, Player... players) {
         FriendlyByteBuf byteBuf;
@@ -92,7 +93,7 @@ public class VisibilityUtil {
             byteBuf.writeDouble(location.getX());
             byteBuf.writeDouble(location.getY());
             byteBuf.writeDouble(location.getZ());
-            byteBuf.writeByte((int) (eyes.getYaw()  * 256.0F / 360.0F));
+            byteBuf.writeByte((int) (eyes.getYaw() * 256.0F / 360.0F));
             byteBuf.writeByte((int) (eyes.getPitch() * 256.0F / 360.0F));
             byteBuf.writeBoolean(true);
 
@@ -145,8 +146,6 @@ public class VisibilityUtil {
         ClientboundSetPlayerTeamPacket packet = new ClientboundSetPlayerTeamPacket(byteBuf);
         PacketUtil.sendPacket(packet, players);
     }
-
-    static Field field;
 
     @SneakyThrows
     public static void refreshEntityData(RyoskeNPC npc, Player... players) {

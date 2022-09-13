@@ -14,6 +14,7 @@ public class RyoskeEquipment implements Updatable {
     private final static ItemStack air = new ItemStack(Material.AIR);
 
     private final Map<EquipmentSlot, ItemStack> equipment = new HashMap<>();
+    private boolean shouldUpdate;
 
     public ItemStack get(EquipmentSlot slot) {
         return equipment.getOrDefault(slot, air);
@@ -24,8 +25,6 @@ public class RyoskeEquipment implements Updatable {
         this.shouldUpdate = true;
         return this;
     }
-
-    private boolean shouldUpdate;
 
     @Override
     public boolean shouldUpdate() {

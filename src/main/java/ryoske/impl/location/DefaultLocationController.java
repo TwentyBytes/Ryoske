@@ -17,7 +17,7 @@ public class DefaultLocationController implements LocationController {
     public DefaultLocationController(RyoskeNPC npc, Location location) {
         this.npc = npc;
         this.location = location;
-        this.lookController = new FixedLookController(npc, location.clone().add(0, 2,  0),0, 0);
+        this.lookController = new FixedLookController(npc, location.clone().add(0, 2, 0), 0, 0);
     }
 
     public DefaultLocationController lookController(LookController controller) {

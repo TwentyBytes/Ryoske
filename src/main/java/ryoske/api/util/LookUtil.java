@@ -13,7 +13,7 @@ public class LookUtil {
         double dy = at.getY() - from.getY();
         double dz = at.getZ() - from.getZ();
 
-        dy /= Math.sqrt(dx*dx+dz*dz);
+        dy /= Math.sqrt(dx * dx + dz * dz);
         float yaw = (float) (Math.atan2(-dx, dz) / Math.PI * 180);
         float pitch = (float) (Math.atan(-dy) / Math.PI * 180);
 

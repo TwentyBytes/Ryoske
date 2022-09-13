@@ -1,6 +1,5 @@
 package ryoske.api.settings;
 
-import lombok.AllArgsConstructor;
 import net.kyori.adventure.text.Component;
 import ryoske.api.intefaces.Updatable;
 
@@ -9,6 +8,7 @@ public class RyoskeNameSettings implements Updatable {
     private Component prefix = Component.empty();
     private Component suffix = Component.empty();
     private Component display;
+    private boolean shouldUpdate;
 
     public RyoskeNameSettings(Component display) {
         this.display = display;
@@ -46,8 +46,6 @@ public class RyoskeNameSettings implements Updatable {
     public Component suffix() {
         return suffix;
     }
-
-    private boolean shouldUpdate;
 
     @Override
     public boolean shouldUpdate() {

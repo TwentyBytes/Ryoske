@@ -6,6 +6,7 @@ public class RyoskeSettings implements Updatable {
 
     private boolean collision = false;
     private boolean nameTagVisibility = false;
+    private boolean shouldUpdate;
 
     public boolean collision() {
         return this.collision;
@@ -26,8 +27,6 @@ public class RyoskeSettings implements Updatable {
         this.shouldUpdate = true;
         return this;
     }
-
-    private boolean shouldUpdate;
 
     @Override
     public boolean shouldUpdate() {

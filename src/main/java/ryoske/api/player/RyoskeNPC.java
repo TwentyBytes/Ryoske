@@ -2,10 +2,8 @@ package ryoske.api.player;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import net.minecraft.world.entity.Entity;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import ryoske.Ryoske;
@@ -18,22 +16,40 @@ import ryoske.api.settings.Settings;
 import ryoske.api.util.VisibilityUtil;
 import ryoske.api.visibility.Visibility;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public abstract class RyoskeNPC {
 
     public static final TIntObjectMap<RyoskeNPC> NPC_BY_ID = new TIntObjectHashMap<>();
 
+    protected int id;
     private BukkitTask update;
 
-    public RyoskeNPC(int id) {
+    public RyoskeNPC() {
+        this.id = Entity.nextEntityId();
         NPC_BY_ID.put(id, this);
 
         respawn();
     }
 
+    @SuppressWarnings("all")
+    public static <T extends RyoskeNPC> T get(int id) {
+        return (T) NPC_BY_ID.get(id);
+    }
+
+    @SuppressWarnings("all")
+    public static <T extends RyoskeNPC> T get(Class<T> clazz, int id) {
+        return (T) NPC_BY_ID.get(id);
+    }
+
+    public static TIntObjectMap<RyoskeNPC> registry() {
+        return NPC_BY_ID;
+    }
+
     public RyoskeNPC destroy() {
-        NPC_BY_ID.remove(id());
+        NPC_BY_ID.remove(id);
         if (this.update != null) {
             this.update.cancel();
             this.update = null;
@@ -44,17 +60,16 @@ public abstract class RyoskeNPC {
 
     public RyoskeNPC respawn() {
         destroy();
-        if (NPC_BY_ID.containsKey(id())) {
-            throw new IllegalStateException("NPC with id -> " + id() + " already registered...");
-        }
-        NPC_BY_ID.put(id(), this);
+        NPC_BY_ID.put(id, this);
 
         long delay = tickDelay();
         this.update = Bukkit.getScheduler().runTaskTimer(Ryoske.getPlugin(), this::dataTick, 100, delay);
         return this;
     }
 
-    public abstract int id();
+    public int id() {
+        return id;
+    }
 
     public abstract String name();
 
@@ -131,20 +146,7 @@ public abstract class RyoskeNPC {
         return this;
     }
 
-    public void tick() {}
-
-    @SuppressWarnings("all")
-    public static <T extends RyoskeNPC> T get(int id) {
-        return (T) NPC_BY_ID.get(id);
-    }
-
-    @SuppressWarnings("all")
-    public static <T extends RyoskeNPC> T get(Class<T> clazz, int id) {
-        return (T) NPC_BY_ID.get(id);
-    }
-
-    public static TIntObjectMap<RyoskeNPC> registry() {
-        return NPC_BY_ID;
+    public void tick() {
     }
 
 }

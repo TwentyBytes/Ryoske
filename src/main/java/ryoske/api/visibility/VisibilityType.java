@@ -13,10 +13,14 @@ public abstract class VisibilityType {
     @Setter
     protected Visibility visibility;
 
-    public void start() {}
-    public void clear() {}
+    public void start() {
+    }
+
+    public void clear() {
+    }
 
     public abstract Set<String> newSeers();
+
     public abstract Set<String> clearSeers();
 
 }

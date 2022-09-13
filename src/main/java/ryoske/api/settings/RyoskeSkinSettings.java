@@ -13,6 +13,7 @@ public class RyoskeSkinSettings implements Updatable {
     private final RyoskeNPC npc;
     @Getter
     private int raw;
+    private boolean shouldUpdate;
 
     public RyoskeSkinSettings(RyoskeNPC owner, int raw) {
         this.npc = owner;
@@ -176,8 +177,6 @@ public class RyoskeSkinSettings implements Updatable {
                 ", hatsEnabled=" + hats() +
                 '}';
     }
-
-    private boolean shouldUpdate;
 
     @Override
     public boolean shouldUpdate() {
