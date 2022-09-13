@@ -1,0 +1,5 @@
+author: TwentyBytes
+version: 1.0.0
+api-version: 1.19
+name: Ryoske
+main: ryoske.Ryoske
