@@ -30,8 +30,6 @@ public abstract class RyoskeNPC {
     public RyoskeNPC() {
         this.id = Entity.nextEntityId();
         NPC_BY_ID.put(id, this);
-
-        respawn();
     }
 
     @SuppressWarnings("all")
@@ -58,12 +56,12 @@ public abstract class RyoskeNPC {
         return this;
     }
 
-    public RyoskeNPC respawn() {
+    public RyoskeNPC spawn() {
         destroy();
         NPC_BY_ID.put(id, this);
 
         long delay = tickDelay();
-        this.update = Bukkit.getScheduler().runTaskTimer(Ryoske.getPlugin(), this::dataTick, 100, delay);
+        this.update = Bukkit.getScheduler().runTaskTimer(Ryoske.getPlugin(), this::dataTick, 0, delay);
         return this;
     }
 
