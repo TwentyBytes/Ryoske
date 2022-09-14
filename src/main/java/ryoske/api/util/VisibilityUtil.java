@@ -64,8 +64,16 @@ public class VisibilityUtil {
     }
 
     public static void hide(RyoskeNPC npc, Player... players) {
-        ClientboundRemoveEntitiesPacket packet = new ClientboundRemoveEntitiesPacket(npc.id());
+        FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
+        byteBuf.writeEnum(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER);
+        byteBuf.writeVarInt(1);
+        byteBuf.writeUUID(npc.uuid());
+
+        ClientboundPlayerInfoPacket packet = new ClientboundPlayerInfoPacket(byteBuf);
         PacketUtil.sendPacket(packet, players);
+
+        ClientboundRemoveEntitiesPacket remove = new ClientboundRemoveEntitiesPacket(npc.id());
+        PacketUtil.sendPacket(remove, players);
     }
 
     public static void refreshDisplayName(RyoskeNPC npc, Player... players) {
@@ -80,6 +88,7 @@ public class VisibilityUtil {
     }
 
     public static void refreshSkin(RyoskeNPC npc, Player... players) {
+        hide(npc, players);
         show(npc, players);
     }
 
