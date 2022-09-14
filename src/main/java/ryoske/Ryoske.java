@@ -2,6 +2,7 @@ package ryoske;
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -23,7 +24,7 @@ public class Ryoske extends JavaPlugin {
     @Getter
     private static String mineSkinKey;
 
-    @Getter
+    @Getter @Setter
     private static MineskinClient mineskinClient;
 
     @SneakyThrows
@@ -34,8 +35,7 @@ public class Ryoske extends JavaPlugin {
     public static void init(Plugin plugin, String mineSkinKey) {
         Ryoske.plugin = plugin;
         Ryoske.mineSkinKey = mineSkinKey;
-
-        mineskinClient = new MineskinClient("Ryoske", mineSkinKey);
+        Ryoske.mineskinClient = new MineskinClient("Ryoske", mineSkinKey);
 
         PluginManager manager = Bukkit.getPluginManager();
         manager.registerEvents(new Listener() {
