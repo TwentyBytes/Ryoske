@@ -56,13 +56,17 @@ public abstract class RyoskeNPC {
         return this;
     }
 
-    public RyoskeNPC spawn() {
+    public RyoskeNPC spawn(long spawnDelay) {
         destroy();
         NPC_BY_ID.put(id, this);
 
         long delay = tickDelay();
-        this.update = Bukkit.getScheduler().runTaskTimer(Ryoske.getPlugin(), this::dataTick, 0, delay);
+        this.update = Bukkit.getScheduler().runTaskTimer(Ryoske.getPlugin(), this::dataTick, spawnDelay, delay);
         return this;
+    }
+
+    public RyoskeNPC spawn() {
+        return spawn(100);
     }
 
     public int id() {

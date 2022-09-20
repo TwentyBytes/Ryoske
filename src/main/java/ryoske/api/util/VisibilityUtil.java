@@ -128,6 +128,10 @@ public class VisibilityUtil {
             equipment.add(Pair.of(value, CraftItemStack.asNMSCopy(stack)));
         }
 
+        if (equipment.isEmpty()) {
+            return;
+        }
+
         ClientboundSetEquipmentPacket packet = new ClientboundSetEquipmentPacket(npc.id(), equipment);
         PacketUtil.sendPacket(packet, players);
     }
