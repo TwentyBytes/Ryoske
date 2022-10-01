@@ -2,9 +2,11 @@ package ryoske.api.player;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import lombok.Getter;
 import net.minecraft.world.entity.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 import ryoske.Ryoske;
 import ryoske.api.animaton.Animation;
@@ -24,10 +26,13 @@ public abstract class RyoskeNPC {
 
     public static final TIntObjectMap<RyoskeNPC> NPC_BY_ID = new TIntObjectHashMap<>();
 
+    @Getter
+    protected Plugin plugin;
     protected int id;
     private BukkitTask update;
 
-    public RyoskeNPC() {
+    public RyoskeNPC(Plugin plugin) {
+        this.plugin = plugin;
         this.id = Entity.nextEntityId();
         NPC_BY_ID.put(id, this);
     }

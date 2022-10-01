@@ -4,6 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.minecraft.network.protocol.game.ServerboundAcceptTeleportationPacket;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -61,6 +62,12 @@ public class Ryoske extends JavaPlugin {
             private void handle(PluginDisableEvent event) {
                 if (event.getPlugin().getName().equalsIgnoreCase(plugin.getName())) {
                     for (RyoskeNPC value : RyoskeNPC.NPC_BY_ID.values(new RyoskeNPC[0])) {
+                        value.destroy();
+                    }
+                }
+
+                for (RyoskeNPC value : RyoskeNPC.NPC_BY_ID.values(new RyoskeNPC[0])) {
+                    if (value.getPlugin().equals(event.getPlugin())) {
                         value.destroy();
                     }
                 }

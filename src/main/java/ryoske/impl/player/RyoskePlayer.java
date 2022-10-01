@@ -1,6 +1,7 @@
 package ryoske.impl.player;
 
 import org.bukkit.Location;
+import org.bukkit.plugin.Plugin;
 import ryoske.api.equipment.RyoskeEquipment;
 import ryoske.api.interact.InteractHandle;
 import ryoske.api.location.LocationController;
@@ -29,7 +30,8 @@ public class RyoskePlayer extends RyoskeNPC {
     private String name;
     private double viewDistance = 25.0D;
 
-    public RyoskePlayer(UUID uuid, String name, Location location) {
+    public RyoskePlayer(Plugin plugin, UUID uuid, String name, Location location) {
+        super(plugin);
         this.uuid = uuid;
         this.name = name;
         this.profile = new RyoskeProfile(this);
