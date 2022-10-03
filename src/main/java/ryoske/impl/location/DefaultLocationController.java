@@ -13,10 +13,14 @@ public class DefaultLocationController implements LocationController {
     private LookController lookController;
 
     private Location location;
+    private Location sleep;
+
+    private boolean shouldUpdate;
 
     public DefaultLocationController(RyoskeNPC npc, Location location) {
         this.npc = npc;
         this.location = location;
+        this.sleep = location;
         this.lookController = new FixedLookController(npc, location.clone().add(0, 2, 0), 0, 0);
     }
 
@@ -41,6 +45,22 @@ public class DefaultLocationController implements LocationController {
     }
 
     @Override
+    public Location sleep() {
+        return sleep.clone();
+    }
+
+    @Override
+    public Location sleepOriginal() {
+        return sleep;
+    }
+
+    public RyoskeNPC sleep(Location location) {
+        this.sleep = location;
+        shouldUpdate = true;
+        return npc;
+    }
+
+    @Override
     public LookController lookController() {
         return lookController;
     }
@@ -53,17 +73,20 @@ public class DefaultLocationController implements LocationController {
     @Override
     public void teleport(Location location) {
         this.location = location;
+        this.sleep = location;
         this.lookController.update();
+
+        shouldUpdate = true;
     }
 
     @Override
     public boolean shouldUpdate() {
-        return lookController instanceof NearbyLookController;
+        return lookController instanceof NearbyLookController || shouldUpdate;
     }
 
     @Override
     public void updated() {
-
+        shouldUpdate = false;
     }
 
 }

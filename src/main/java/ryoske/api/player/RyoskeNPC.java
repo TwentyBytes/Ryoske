@@ -116,6 +116,7 @@ public abstract class RyoskeNPC {
 
         if (locationController().shouldUpdate()) {
             VisibilityUtil.refreshPosition(this, players);
+            VisibilityUtil.refreshEntityData(this, players);
             locationController().updated();
         }
 

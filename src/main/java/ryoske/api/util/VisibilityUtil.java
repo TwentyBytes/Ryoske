@@ -5,6 +5,7 @@ import io.netty.buffer.Unpooled;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -12,6 +13,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
@@ -31,6 +33,7 @@ public class VisibilityUtil {
 
     static Field field;
     static Field field1;
+    static Field field2;
 
     public static void show(RyoskeNPC npc, Player... players) {
         FriendlyByteBuf byteBuf;
@@ -173,11 +176,22 @@ public class VisibilityUtil {
             field1 = Entity.class.getDeclaredField("ad");
             field1.setAccessible(true);
         }
+        if (field2 == null) {
+            field2 = LivingEntity.class.getDeclaredField("bP");
+            field2.setAccessible(true);
+        }
 
         List<SynchedEntityData.DataItem<?>> items = new ArrayList<>();
         items.add(new SynchedEntityData.DataItem<>(ServerPlayer.DATA_PLAYER_MODE_CUSTOMISATION, (byte) npc.settings().skinSettings().getRaw()));
         items.add(new SynchedEntityData.DataItem<>((EntityDataAccessor<Byte>) field.get(null), (byte) (npc.settings().handSettings().hand() == MainHand.RIGHT ? 1 : 0)));
         items.add(new SynchedEntityData.DataItem<>((EntityDataAccessor<Pose>) field1.get(null), Pose.values()[npc.settings().poseSettings().pose().ordinal()]));
+
+        Location sleep = npc.locationController().sleepOriginal();
+        items.add(new SynchedEntityData.DataItem<>((EntityDataAccessor<BlockPos>) field2.get(null), new BlockPos(
+                sleep.getX(),
+                sleep.getY(),
+                sleep.getZ()
+        )));
 
         FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
 

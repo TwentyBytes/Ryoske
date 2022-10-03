@@ -13,6 +13,10 @@ public interface LocationController extends Updatable {
 
     Location locationOriginal();
 
+    Location sleep();
+
+    Location sleepOriginal();
+
     LookController lookController();
 
     void setLookController(LookController controller);
