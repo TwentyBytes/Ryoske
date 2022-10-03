@@ -4,7 +4,6 @@ import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import net.minecraft.network.protocol.game.ServerboundAcceptTeleportationPacket;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +24,8 @@ public class Ryoske extends JavaPlugin {
     @Getter
     private static String mineSkinKey;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static MineskinClient mineskinClient;
 
     @SneakyThrows

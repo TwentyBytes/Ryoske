@@ -8,12 +8,14 @@ public class Settings {
     private final RyoskeSkinSettings skinSettings;
     private final RyoskeHandSettings handSettings;
     private final RyoskeNameSettings nameSettings;
+    private final RyoskePoseSettings poseSettings;
     private final RyoskeSettings settings;
 
     public Settings(RyoskeNPC npc) {
         this.skinSettings = new RyoskeSkinSettings(npc, 0);
         this.handSettings = new RyoskeHandSettings();
         this.nameSettings = new RyoskeNameSettings(LegacyComponentSerializer.legacySection().deserialize(npc.name()));
+        this.poseSettings = new RyoskePoseSettings();
         this.settings = new RyoskeSettings();
     }
 
@@ -27,6 +29,10 @@ public class Settings {
 
     public RyoskeNameSettings nameSettings() {
         return nameSettings;
+    }
+
+    public RyoskePoseSettings poseSettings() {
+        return poseSettings;
     }
 
     public RyoskeSettings settings() {

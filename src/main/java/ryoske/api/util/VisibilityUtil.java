@@ -10,7 +10,9 @@ import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import org.bukkit.Location;
@@ -28,6 +30,7 @@ import java.util.List;
 public class VisibilityUtil {
 
     static Field field;
+    static Field field1;
 
     public static void show(RyoskeNPC npc, Player... players) {
         FriendlyByteBuf byteBuf;
@@ -166,10 +169,15 @@ public class VisibilityUtil {
             field = net.minecraft.world.entity.player.Player.class.getDeclaredField("bP");
             field.setAccessible(true);
         }
+        if (field1 == null) {
+            field1 = Entity.class.getDeclaredField("ad");
+            field1.setAccessible(true);
+        }
 
         List<SynchedEntityData.DataItem<?>> items = new ArrayList<>();
         items.add(new SynchedEntityData.DataItem<>(ServerPlayer.DATA_PLAYER_MODE_CUSTOMISATION, (byte) npc.settings().skinSettings().getRaw()));
         items.add(new SynchedEntityData.DataItem<>((EntityDataAccessor<Byte>) field.get(null), (byte) (npc.settings().handSettings().hand() == MainHand.RIGHT ? 1 : 0)));
+        items.add(new SynchedEntityData.DataItem<>((EntityDataAccessor<Pose>) field1.get(null), Pose.values()[npc.settings().poseSettings().pose().ordinal()]));
 
         FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
 

@@ -119,10 +119,11 @@ public abstract class RyoskeNPC {
             locationController().updated();
         }
 
-        if (settings().skinSettings().shouldUpdate() || settings().handSettings().shouldUpdate()) {
+        if (settings().poseSettings().shouldUpdate() || settings().skinSettings().shouldUpdate() || settings().handSettings().shouldUpdate()) {
             VisibilityUtil.refreshEntityData(this, players);
             settings().skinSettings().updated();
             settings().handSettings().updated();
+            settings().poseSettings().updated();
         }
 
         if (settings().nameSettings().shouldUpdate() || settings().settings().shouldUpdate()) {
